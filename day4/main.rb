@@ -29,12 +29,26 @@ def get_uncalled(board, called_numbers)
   board.flatten.reject{ |n| has_been_called(n, called_numbers) }
 end
 
+# numbers_to_call.each_with_index do |number, index|
+#   called_numbers = numbers_to_call[0..index]
+#   boards.each do |board|
+#     if has_board_won(board, called_numbers)
+#       puts "part1: #{get_uncalled(board, called_numbers).sum * number}"
+#       return
+#     end
+#   end
+# end
+
+last_board = boards[0]
+called_numbers = []
 numbers_to_call.each_with_index do |number, index|
   called_numbers = numbers_to_call[0..index]
-  boards.each do |board|
-    if has_board_won(board, called_numbers)
-      puts "part1: #{get_uncalled(board, called_numbers).sum * number}"
-      return
-    end
+  remaining_boards = boards.clone.reject{ |board| has_board_won(board, called_numbers) }
+  if remaining_boards.length > 0
+    last_board = remaining_boards[0]
+  else
+    break
   end
 end
+
+puts "part2: #{get_uncalled(last_board, called_numbers).sum * called_numbers.last}"
