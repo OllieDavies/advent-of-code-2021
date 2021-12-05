@@ -29,10 +29,10 @@ grid = Hash.new
 data.each_with_index do |cloud|
   from,to = cloud
 
-  next if !is_straight(from, to)
+  # next if !is_straight(from, to)
 
   line_coords = get_points_for_line(from, to)
   line_coords.each{ |coords| grid[coords] = grid[coords] + 1 rescue 1 }
 end
 
-puts "part1: #{grid.values.count{ |n| n > 1 }}"
+puts "part2: #{grid.values.count{ |n| n > 1 }}"
